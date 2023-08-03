@@ -29,27 +29,30 @@ class UserRepository {
       rethrow;
     }
   }
-}
+
 
 Future<UserModel> signIn({
-  required String email,
-  required String password,
-}) async {
-  try {
-    Response response = await _api.sendRequest.post("/user/signIn",
-        data: jsonEncode({
-          "email": email,
-          "password": password,
-        }));
-    ApiResponse apiResponse = ApiResponse.fromResponse(response);
+    required String email,
+    required String password,
+  }) async {
+    try {
+      Response response = await _api.sendRequest.post("/user/signIn",
+          data: jsonEncode({
+            "email": email,
+            "password": password,
+          }));
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
 
-    if (!apiResponse.success) {
-      throw apiResponse.message.toString();
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+
+      //Converting row data to the model
+      return UserModel.fromJson(apiResponse.data);
+    } catch (ex) {
+      rethrow;
     }
-
-    //Converting row data to the model
-    return UserModel.fromJson(apiResponse.data);
-  } catch (ex) {
-    rethrow;
   }
+
 }
+
