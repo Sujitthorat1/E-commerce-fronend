@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:ecommerce/core/routes.dart';
 import 'package:ecommerce/core/ui.dart';
+import 'package:ecommerce/logic/cubits/category_cubit/category_cubit.dart';
 import 'package:ecommerce/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:ecommerce/presentation/screens/auth/login_screen.dart';
 import 'package:ecommerce/presentation/screens/splash/splash_screen.dart';
@@ -22,7 +23,10 @@ class Ecommerce extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => UserCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => CategoryCubit(),
+        ),
       ],
       child: MaterialApp(
         theme: Themes.defaultTheme,
