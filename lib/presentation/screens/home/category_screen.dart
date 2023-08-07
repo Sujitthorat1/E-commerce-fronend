@@ -25,7 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         );
       }
       return ListView.builder(
-        itemCount: 5,
+        itemCount: state.categories.length,
         itemBuilder: (context, index) {
           final category = state.categories[index];
           return ListTile(
