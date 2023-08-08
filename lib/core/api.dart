@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+// ignore: constant_identifier_names
 const String BASE_URL = "http://192.168.0.165:5000/api";
 
 class Api {

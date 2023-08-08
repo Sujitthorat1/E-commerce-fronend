@@ -1,7 +1,7 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/logic/cubits/product_cubit/product_cubit.dart';
 import 'package:ecommerce/logic/cubits/product_cubit/product_state.dart';
+import 'package:ecommerce/presentation/screens/product/product_detail_screen.dart';
 import 'package:ecommerce/presentation/widgets/gap_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,41 +37,51 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
           itemCount: state.products.length,
           itemBuilder: (context, index) {
             final product = state.products[index];
-            return Row(
-              children: [
-                CachedNetworkImage(
-                  width: MediaQuery.of(context).size.width / 4,
-                  height: MediaQuery.of(context).size.height / 6,
-                  imageUrl:"${product.images?[0]}",
-                ),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${product.title}",
-                        style: TextStyles.body1
-                            .copyWith(fontWeight: FontWeight.bold),
-                            maxLines: 3,overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        "${product.description}",
-                        maxLines: 3, overflow: TextOverflow.ellipsis,
-                        style:
-                            TextStyles.body2.copyWith(color: AppColors.textLight),
-                      ),
-                      const GapWidget(size: -10,),
-                      Text(
-                        "₹${Formatter.formatPrice(product.price!)}",
-                        style: TextStyles.body1,
-                      ),
-                    ],
+
+
+            return CupertinoButton(
+              onPressed: () {
+                Navigator.pushNamed(context, ProductDetailScreen.routeName,arguments: product);
+              },
+              child: Row(
+                children: [
+                  CachedNetworkImage(
+                    width: MediaQuery.of(context).size.width / 4,
+                    height: MediaQuery.of(context).size.height / 6,
+                    imageUrl: "${product.images?[0]}",
                   ),
-                ),
-                IconButton(onPressed:() {
-                  
-                }, icon: const Icon(CupertinoIcons.cart))
-              ],
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${product.title}",
+                          style: TextStyles.body1
+                              .copyWith(fontWeight: FontWeight.bold),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          "${product.description}",
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyles.body2
+                              .copyWith(color: AppColors.textLight),
+                        ),
+                        const GapWidget(
+                          size: -10,
+                        ),
+                        Text(
+                          Formatter.formatPrice(product.price!),
+                          style: TextStyles.body1,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {}, icon: const Icon(CupertinoIcons.cart))
+                ],
+              ),
             );
           },
         );

@@ -9,7 +9,6 @@ import 'package:ecommerce/presentation/widgets/link_button.dart';
 import 'package:ecommerce/presentation/widgets/primary_button.dart';
 import 'package:ecommerce/presentation/widgets/primary_textfield.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
