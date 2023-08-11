@@ -56,10 +56,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             IconButton(
               onPressed: () {},
-              icon: const Icon(CupertinoIcons.profile_circled,size:50,color: Colors.blue,),
+              icon: const Icon(
+                CupertinoIcons.profile_circled,
+                size: 50,
+                color: Colors.blue,
+              ),
             ),
-            const GapWidget()
-,            Text(
+            const GapWidget(),
+            Text(
               "${userModel.fullName}Sujit Thorat",
               style: TextStyles.heading3,
             ),
@@ -71,23 +75,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-        
+
         ListTile(
           onTap: () {},
           contentPadding: EdgeInsets.zero,
-          leading: const Icon(CupertinoIcons.cube_box_fill, color: Colors.blueGrey,),
+          leading: const Icon(
+            CupertinoIcons.cube_box_fill,
+            color: Colors.blueGrey,
+          ),
           title: Text(
             "My orders",
             style: TextStyles.body1,
           ),
         ),
-         ListTile(
-          onTap: () {
-            
-          },
+        ListTile(
+          onTap: () {},
           contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.favorite, color: Colors.pink,),
-          title:  Text("Favorite items",style: TextStyles.body1),
+          leading: const Icon(
+            Icons.favorite,
+            color: Colors.pink,
+          ),
+          title: Text("Favorite items", style: TextStyles.body1),
         ),
         ListTile(
           onTap: () {
@@ -102,9 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "Sign Out",
             style: TextStyles.body1.copyWith(color: Colors.red),
           ),
-
         ),
-       
       ],
     );
   }
