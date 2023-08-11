@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:ecommerce/core/routes.dart';
 import 'package:ecommerce/core/ui.dart';
+import 'package:ecommerce/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce/logic/cubits/category_cubit/category_cubit.dart';
 import 'package:ecommerce/logic/cubits/product_cubit/product_cubit.dart';
 import 'package:ecommerce/logic/cubits/user_cubit/user_cubit.dart';
@@ -28,6 +29,12 @@ class Ecommerce extends StatelessWidget {
           create: (context) => CategoryCubit(),
         ),
         BlocProvider(create:(context) => ProductCubit(),),
+        BlocProvider(
+          create: (context) => CartCubit(
+            BlocProvider.of<UserCubit>(context)
+          ),
+        ),
+
       ],
       child: MaterialApp(
         theme: Themes.defaultTheme,

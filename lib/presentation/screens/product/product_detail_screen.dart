@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/ui.dart';
+import 'package:ecommerce/logic/cubits/cart_cubit/cart_cubit.dart';
+import 'package:ecommerce/logic/cubits/cart_cubit/cart_state.dart';
 import 'package:ecommerce/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce/presentation/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import '../../../data/models/product/product_model.dart';
 import '../../../logic/services/formatter.dart';
@@ -55,14 +58,35 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const GapWidget(
                   size: 10,
                 ),
-                PrimaryButton(onPressed: () {}, text: "Add to cart"),
-                 const GapWidget(
+                BlocBuilder<CartCubit, CartState>(builder: (context, state) {
+                  bool isInCart = BlocProvider.of<CartCubit>(context)
+                      .cartContains(widget.productModel);
+                  return PrimaryButton(
+                      onPressed: () {
+                        if (isInCart) {
+                          return;
+                        }
+
+                        BlocProvider.of<CartCubit>(context)
+                            .addToCart(widget.productModel, 1);
+                      },
+                      color:
+                          (isInCart) ? AppColors.textLight : AppColors.accent,
+                      text:
+                          (isInCart) ? "Product added to cart" : "Add to cart");
+                }),
+                const GapWidget(
                   size: 10,
                 ),
-              
-              Text("Description", style: TextStyles.body1.copyWith(fontWeight: FontWeight.bold),),
-              Text("${widget.productModel.description}", style: TextStyles.body2,)
-              ],  
+                Text(
+                  "Description",
+                  style: TextStyles.body1.copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${widget.productModel.description}",
+                  style: TextStyles.body2,
+                )
+              ],
             ),
           ),
         ],
