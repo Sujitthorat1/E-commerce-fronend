@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/ui.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_state.dart';
+import 'package:ecommerce/presentation/screens/order/order_screen.dart';
 import 'package:ecommerce/presentation/widgets/link_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,9 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.5,
                     child: CupertinoButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, OrderScreen.routeName);
+                      },
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width / 22),
                       color: AppColors.accent,
