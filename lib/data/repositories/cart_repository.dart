@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:ecommerce/core/api.dart';
 
-import '../models/cart/cart_tem_model.dart';
+import '../models/cart/cart_item_model.dart';
 
 class CartRepository {
   final _api = Api();
