@@ -30,8 +30,7 @@ class UserRepository {
     }
   }
 
-
-Future<UserModel> signIn({
+  Future<UserModel> signIn({
     required String email,
     required String password,
   }) async {
@@ -54,5 +53,20 @@ Future<UserModel> signIn({
     }
   }
 
-}
+  Future<UserModel> updateUser(UserModel userModel) async {
+    try {
+      Response response = await _api.sendRequest.put("/user/${userModel.sId}",
+          data: jsonEncode(userModel.toJson()));
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
 
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+
+      //Converting row data to the model
+      return UserModel.fromJson(apiResponse.data);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+}

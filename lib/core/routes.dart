@@ -64,7 +64,9 @@ class Routes {
             child: const CategoryProductScreen(),
           ),
         );
+      
 
+      //edit profile route 
       case EditProfileScreen.routeName:
         return CupertinoPageRoute(
           builder: (context) => const EditProfileScreen(),
