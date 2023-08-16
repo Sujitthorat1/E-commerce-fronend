@@ -1,4 +1,4 @@
-import '../../data/models/cart/cart_tem_model.dart';
+import '../../data/models/cart/cart_item_model.dart';
 
 class Calculation {
   static double cartTotal(List<CartItemModel> items) {

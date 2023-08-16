@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ecommerce/data/models/cart/cart_tem_model.dart';
+import 'package:ecommerce/data/models/cart/cart_item_model.dart';
 import 'package:ecommerce/data/models/product/product_model.dart';
 import 'package:ecommerce/data/repositories/cart_repository.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_state.dart';

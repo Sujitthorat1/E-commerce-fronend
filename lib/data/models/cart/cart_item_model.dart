@@ -12,11 +12,12 @@ class CartItemModel {
     quantity = json['quantity'];
     sId = json["_id"];
   }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['product'] = product!.sId;
-    data['quantity'] = this.quantity;
-    data['_id'] = this.sId;
+  Map<String, dynamic> toJson({bool objectMode = false}) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+
+    data['product'] = (objectMode == false) ? product!.sId : product!.toJson();
+    data['quantity'] = quantity;
+    data['_id'] = sId;
     return data;
   }
 }
