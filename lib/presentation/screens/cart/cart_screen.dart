@@ -1,13 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/ui.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_state.dart';
-import 'package:ecommerce/presentation/screens/order/order_screen.dart';
-import 'package:ecommerce/presentation/widgets/link_button.dart';
+import 'package:ecommerce/presentation/screens/order/order_detail_screen.dart';
+import 'package:ecommerce/presentation/widgets/cart_list_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:input_quantity/input_quantity.dart';
 
 import '../../../logic/services/calculation.dart';
 import '../../../logic/services/formatter.dart';
@@ -44,45 +42,7 @@ class _CartScreenState extends State<CartScreen> {
         return Column(
           children: [
             Expanded(
-                child: ListView.builder(
-              itemCount: state.items.length,
-              itemBuilder: (context, index) {
-                final item = state.items[index];
-
-                return ListTile(
-                  leading: CachedNetworkImage(
-                    imageUrl: item.product!.images![0], //
-                  ),
-                  title: Text("${item.product?.title}"),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "${Formatter.formatPrice(item.product!.price!)} x ${item.quantity} = ${Formatter.formatPrice(item.product!.price! * item.quantity!)}"),
-                      LinkButton(
-                        onPressed: () {
-                          BlocProvider.of<CartCubit>(context)
-                              .removeFromCart(item.product!);
-                        },
-                        text: "Delete",
-                        color: Colors.red,
-                      )
-                    ],
-                  ),
-                  trailing: InputQty(
-                    maxVal: 99,
-                    initVal: item.quantity!, //
-                    minVal: 1,
-                    showMessageLimit: false,
-                    onQtyChanged: (value) {
-                      //
-                      BlocProvider.of<CartCubit>(context)
-                          .addToCart(item.product!, value as int);
-                    },
-                  ),
-                );
-              },
-            )),
+                child: CartListView(items: state.items)),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
