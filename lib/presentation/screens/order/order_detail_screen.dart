@@ -1,16 +1,23 @@
+import 'dart:math';
+
+import 'package:dio/dio.dart';
 import 'package:ecommerce/core/ui.dart';
+import 'package:ecommerce/data/models/order/order_model.dart';
 import 'package:ecommerce/data/models/user/user_model.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce/logic/cubits/cart_cubit/cart_state.dart';
 import 'package:ecommerce/logic/cubits/order_cubit/order_cubit.dart';
 import 'package:ecommerce/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:ecommerce/logic/cubits/user_cubit/user_state.dart';
+import 'package:ecommerce/logic/services/rozerpay.dart';
+import 'package:ecommerce/presentation/screens/order/order_placed_screen.dart';
 import 'package:ecommerce/presentation/screens/order/providers/order_detail_provider.dart';
 import 'package:ecommerce/presentation/screens/user/edit_profile_screen.dart';
 import 'package:ecommerce/presentation/widgets/cart_list_view.dart';
 import 'package:ecommerce/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce/presentation/widgets/link_button.dart';
 import 'package:ecommerce/presentation/widgets/primary_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -127,10 +134,10 @@ class _OrderScreenState extends State<OrderScreen> {
                   ),
                   const GapWidget(),
 
-                  //go to the order places screen 
+                  //go to the order places screen
                   PrimaryButton(
                       onPressed: () async {
-                        bool success =
+                        OrderModel? newOrder =
                             await BlocProvider.of<OrderCubit>(context)
                                 .createOrder(
                           items:
@@ -141,13 +148,30 @@ class _OrderScreenState extends State<OrderScreen> {
                               .paymentMethod
                               .toString(),
                         );
+                        if (newOrder == null) return;
 
-                        if (success) {
+                        if (newOrder.status == "payment-pending") {
+                          RazorPayServices.checkoutOrder(
+                            newOrder,
+                            onSuccess: (response) {
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                              Navigator.pushNamed(
+                                  context, OrderPlacedScreen.routeName);
+                            },
+                            onFailure: (response) {
+                              if (kDebugMode) {
+                                print("Payment Failed");
+                              }
+                            },
+                          );
+                        }
+                        if (newOrder.status == "order-placed") {
                           // ignore: use_build_context_synchronously
                           Navigator.popUntil(context, (route) => route.isFirst);
                           // ignore: use_build_context_synchronously
                           Navigator.pushNamed(
-                              context, OrderScreen.routeName);
+                              context, OrderPlacedScreen.routeName);
                         }
                       },
                       text: "Place Order")

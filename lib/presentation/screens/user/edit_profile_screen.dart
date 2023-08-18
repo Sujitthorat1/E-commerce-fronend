@@ -108,6 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               bool success = await BlocProvider.of<UserCubit>(context)
                   .updateUser(userModel);
               if (success) {
+                // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               }
             },
